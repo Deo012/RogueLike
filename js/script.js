@@ -1,74 +1,86 @@
+//grille interne du jeux
 
- //Creation du tableau de jeu
- let grilleDonjon = new Array(15);
+let jsGrille = [
+                ["m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m"],
+                ["m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m"],
+                ["m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m"],
+                ["m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m"],
+                ["m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","b","m","m","m","m","m","m","m","m","m"],
+                ["m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","s","m","m","m","m","m","m","m","m","m"],
+                ["m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","s","m","m","m","m","m","m","m","m","m"],
+                ["m","m","m","m","m","m","m","m","m","m","ms1","s","s","s","s","s","m","m","m","m","m","m","m","m","m"],
+                ["m","m","m","m","m","m","m","m","m","m","m","m","m","m","t","m","m","m","m","m","m","m","m","m","m"],
+                ["m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m"],
+                ["m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m"],
+                ["m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m"],
+                ["m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m"],
+                ["m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m"],
+                ["m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m"]
 
-for(let ligne = 0; ligne < 15; ligne++){
-    grilleDonjon[ligne] = new Array(25); //dans chaque ligne il y a 25 colonne
-}
+            ];
 
-//Remplissage des cases (tous des murs)
-for(let ligne = 0; ligne < 15; ligne++){
-    for(let colonne = 0; colonne < 25; colonne++){
-        grilleDonjon[ligne][colonne] = "Mur";
+
+let htmlGrille = document.getElementById("grillejeux");
+let htmlBody = document.querySelector("#body");
+
+let bonhomme;//[x,y]
+let monstre1;//[x,y]
+
+updateTable(jsGrille);
+
+document.addEventListener("keydown", (event) => {
+    if(event.code == "ArrowLeft"){
+        console.log("ArrowLeft"); //debug
+        moveOnXAxis(-1);
+        updateTable(jsGrille)
+    }
+})
+//htmlBody.appendChild(htmlGrille);
+
+function updateTable(table){
+    htmlGrille.innerHTML = null;
+    for(let i = 0; i < 15; i++){  
+        let tableRow = document.createElement("tr");  
+    
+        for(let j = 0; j < 25; j++){
+            let tableData = document.createElement("td");
+            tableData.innerHTML = jsGrille[i][j];
+            tableRow.appendChild(tableData);
+    
+            switch(jsGrille[i][j]){
+                case "b":
+                    bonhomme = [i,j];
+                    console.log("Le bonhomme est a: " + bonhomme); //debug
+                    break;
+                case "ms1":
+                    monstre1 = [i,j];
+                    console.log("Le monstre est a: " + monstre1); //debug
+                    break;
+            }
+            if(jsGrille[i][j-1] != "m"){
+                jsGrille[i][j-1] = "b";
+                jsGrille[i][j] = "s";
+            }
+
+        }
+    
+        htmlGrille.appendChild(tableRow);
     }
 }
 
-//Remplisage du sol
-grilleDonjon[2][15] = "Tresor"; // Tresor
-grilleDonjon[2][16] = "Sol";
-grilleDonjon[2][17] = "Sol";
-grilleDonjon[2][18] = "Sol";
-grilleDonjon[3][15] = "Sol";
-grilleDonjon[3][16] = "Sol";
-grilleDonjon[3][17] = "Sol";
-grilleDonjon[3][18] = "Sol";
-grilleDonjon[4][18] = "Sol";
-grilleDonjon[5][18] = "Sol";
-grilleDonjon[5][19] = "Sol";
-grilleDonjon[6][15] = "Sol";
-grilleDonjon[6][16] = "Sol";
-grilleDonjon[6][17] = "Monstre"; // Monstre
-grilleDonjon[6][18] = "Sol";
-grilleDonjon[6][19] = "Sol";
-grilleDonjon[6][20] = "Sol";
-grilleDonjon[7][15] = "Sol";
-grilleDonjon[7][16] = "Sol";
-grilleDonjon[7][17] = "Sol";
-grilleDonjon[7][18] = "Sol";
-grilleDonjon[7][19] = "Sol";
-grilleDonjon[7][20] = "Sol";
-grilleDonjon[8][15] = "Sol";
-grilleDonjon[8][19] = "Sol";
-grilleDonjon[9][12] = "Sol";
-grilleDonjon[9][13] = "Sol";
-grilleDonjon[9][15] = "Sol";
-grilleDonjon[9][19] = "Sol";
-grilleDonjon[10][11] = "Tresor";  // Tresor
-grilleDonjon[10][12] = "Sol";
-grilleDonjon[10][13] = "Sol";
-grilleDonjon[10][14] = "Sol";
-grilleDonjon[10][15] = "Sol";
-grilleDonjon[10][19] = "Sol";
-grilleDonjon[10][20] = "Sol";
-grilleDonjon[11][11] = "Sol";
-grilleDonjon[11][12] = "Sol";
-grilleDonjon[11][13] = "Sol";
-grilleDonjon[11][19] = "Sol";
-grilleDonjon[11][20] = "Sol";
-grilleDonjon[11][21] = "Sol";
-grilleDonjon[12][20] = "Monstre"; // Monstre
-grilleDonjon[12][21] = "Sol";
-grilleDonjon[13][20] = "Sol";
-grilleDonjon[13][21] = "Sol";
-grilleDonjon[14][20] = "Sol";
-grilleDonjon[14][21] = "Bonhomme"; //Bonhomme
-grilleDonjon[14][22] = "Sol";
-
-
-
-
-
-
-
-console.table(grilleDonjon)
-//
+function moveOnXAxis(direction){
+    let temp;
+    temp = jsGrille[bonhomme[0], bonhomme[1] + direction];
+    jsGrille[bonhomme[0], bonhomme[1] + direction] = jsGrille[bonhomme[0], bonhomme[1]];
+    jsGrille[bonhomme[0], bonhomme[1]] = temp;
+    //bonhomme = [bonhomme[0], bonhomme[1] + direction];
+    console.log("Le bonhomme est a: " + bonhomme); //debug
+}
+function moveOnYAxis(direction){
+    let temp;
+    temp = jsGrille[bonhomme[0] + direction, bonhomme[1]];
+    jsGrille[bonhomme[0] + direction, bonhomme[1]] = jsGrille[bonhomme[0], bonhomme[1]];
+    jsGrille[bonhomme[0], bonhomme[1]] = temp;
+    bonhomme = [bonhomme[0] + direction, bonhomme[1]];
+    console.log("Le bonhomme est a: " + bonhomme); //debug
+}

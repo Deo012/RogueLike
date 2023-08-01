@@ -1,0 +1,15 @@
+#container{
+
+}
+#grillejeux{
+    border-collapse: separate;
+    border-spacing: 10px 5px;
+    margin: 0 auto;
+    bottom: auto;
+    right: auto;
+}
+#grillejeux td{
+    height: 40px;
+    width: 40px;
+    text-align: center;
+}

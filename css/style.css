@@ -19,3 +19,12 @@
 p{
     text-align: center;
 }
+.monstre{
+    background-color: blueviolet;
+}
+.tresor{
+    background-color: goldenrod;
+}
+#afficheur_de_score{
+    font-size: 2em;
+}

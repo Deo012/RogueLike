@@ -32,122 +32,12 @@ let bouton_haut = document.getElementById("btn_haut");
 let bouton_bas = document.getElementById("btn_bas")
 let bouton_gauche = document.getElementById("btn_gauche");
 let bouton_droit = document.getElementById("btn_droit");
-let boutonReset = document.getElementById("btn_reset")
-bouton_haut.addEventListener("click", (event)=>{
-    
-    for(let i = 1; i < 15; i++){
+let boutonReset = document.getElementById("btn_reset");
 
-        for(let j = 1; j < 25; j++){
-            if(jsGrille[i][j] == "b"){
-                if(jsGrille[i-1][j] != "m" && jsGrille[i-1][j] != "ms"){
-                    jsGrille[i-1][j] = "b";
-                    jsGrille[i][j] = "s";
-                    break;
-                }
-                else if(jsGrille[i-1][j] == "ms"){
-                    bouton_haut.removeEventListener();
-                    bouton_bas.removeEventListener();
-                    bouton_gauche.removeEventListener();
-                    bouton_droit.removeEventListener();
-                }
-            }
-        }
-
-    }
-    updateTable();
-})
-bouton_bas.addEventListener("click", (event)=>{
-    
-    for(let i = 1; i < 15; i++){
-
-        for(let j = 1; j < 25; j++){
-            if(jsGrille[i][j] == "b"){
-                if(jsGrille[i+1][j] != "m"){
-                    jsGrille[i+1][j] = "b";
-                    jsGrille[i][j] = "s";
-                    break;
-                }
-                else if(jsGrille[i+1][j] == "ms"){
-                    bouton_haut.removeEventListener();
-                    bouton_bas.removeEventListener();
-                    bouton_gauche.removeEventListener();
-                    bouton_droit.removeEventListener();
-                }
-            }
-        }
-
-    }
-    updateTable();
-})
-bouton_droit.addEventListener("click", (event)=>{
-    
-    for(let i = 1; i < 15; i++){
-
-        for(let j = 1; j < 25; j++){
-            if(jsGrille[i][j] == "b"){
-                if(jsGrille[i][j+1] != "m" && jsGrille[i][j+1] != "ms"){
-                    jsGrille[i][j+1] = "b";
-                    jsGrille[i][j] = "s";
-                    break;
-                }
-                else if(jsGrille[i][j+1] == "ms"){
-                    bouton_haut.removeEventListener();
-                    bouton_bas.removeEventListener();
-                    bouton_gauche.removeEventListener();
-                    bouton_droit.removeEventListener();
-                }
-            }
-        }
-
-    }
-    updateTable();
-})
-bouton_gauche.addEventListener("click", (event)=>{
-    
-    for(let i = 1; i < 15; i++){
-
-        for(let j = 1; j < 25; j++){
-            if(jsGrille[i][j] == "b"){
-                if(jsGrille[i][j-1] != "m" && jsGrille[i][j-1] != "ms"){
-                    jsGrille[i][j-1] = "b";
-                    jsGrille[i][j] = "s";
-                    break;
-                }
-                else if(jsGrille[i][j-1] == "ms"){
-                    console.log("La partie est fini")
-                    bouton_haut.removeEventListener("click", event);
-                    bouton_bas.removeEventListener("click", event);
-                    bouton_gauche.removeEventListener("click", event);
-                    bouton_droit.removeEventListener("click", event);
-                }
-            }
-        }
-
-    }
-    updateTable();
-})
-boutonReset.addEventListener("click", (event)=>{
-    console.log("Reset")
-    jsGrille = [
-        ["m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m"],
-        ["m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m"],
-        ["m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m"],
-        ["m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m"],
-        ["m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","b","m","m","m","m","m","m","m","m","m"],
-        ["m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","s","m","m","m","m","m","m","m","m","m"],
-        ["m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","s","m","m","m","m","m","m","m","m","m"],
-        ["m","m","m","m","m","m","m","m","m","m","ms","s","s","s","s","s","m","m","m","m","m","m","m","m","m"],
-        ["m","m","m","m","m","m","m","m","m","m","m","m","m","m","t","m","m","m","m","m","m","m","m","m","m"],
-        ["m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m"],
-        ["m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m"],
-        ["m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m"],
-        ["m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m"],
-        ["m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m"],
-        ["m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m"]
-
-    ];
-    updateTable(jsGrille);
-})
+bouton_bas.addEventListener("click", ()=>{bougerBonhomme("bas")});
+bouton_haut.addEventListener("click", ()=>{bougerBonhomme("haut")});
+bouton_gauche.addEventListener("click", ()=>{bougerBonhomme("gauche")});
+bouton_droit.addEventListener("click", ()=>{bougerBonhomme("droit")});
 
 function updateTable(table){
     console.log("Update:");
@@ -170,6 +60,8 @@ function updateTable(table){
                     monstre1 = [i,j];
                     console.log("Le monstre est a: " + monstre1); //debug
                     break;
+                case "s":
+                    tableData.setAttribute("class","sol");
             }
         }
     
@@ -177,7 +69,74 @@ function updateTable(table){
     }
 }
 
+function bougerBonhomme(direction){
+    
+    //trouver le bonhomme
+    for(let i = 1; i < 15; i++){
+        for(let j = 1; j < 25; j++){
+            if(jsGrille[i][j] == "b"){
+                bonhomme = [parseInt(i),parseInt(j)]; //[y,x]
+                break;
+            }
+        }
+    }
 
-/*
+    //bouger le bonhomme selon direction
+    if(direction == "bas"){
+        if(jsGrille[bonhomme[0]+1][bonhomme[1]] != "m" && jsGrille[bonhomme[0]+1][bonhomme[1]] != "ms"){
+            console.log("bas");
+            jsGrille[bonhomme[0]+1][bonhomme[1]] = "b";
+            jsGrille[bonhomme[0]][bonhomme[1]] = "s";
+            bonhomme = [bonhomme[0]+1][bonhomme[1]];
+            updateTable(jsGrille);
+        }
+        else if(jsGrille[bonhomme[0]+1][bonhomme[1]] == "ms"){
+            gameOver();
+        }
+    }
+    
+    if(direction == "haut"){
+        if(jsGrille[bonhomme[0]-1][bonhomme[1]] != "m"){
+            console.log("haut");
+            jsGrille[bonhomme[0]-1][bonhomme[1]] = "b";
+            jsGrille[bonhomme[0]][bonhomme[1]] = "s";
+            bonhomme = [bonhomme[0]-1][bonhomme[1]];
+            updateTable(jsGrille);
+        }
+    }
+    
+    if(direction == "gauche"){
+        if(jsGrille[bonhomme[0]][bonhomme[1]-1] != "m" && jsGrille[bonhomme[0]][bonhomme[1]-1] != "ms"){
+            console.log("gauche");
+            jsGrille[bonhomme[0]][bonhomme[1]-1] = "b";
+            jsGrille[bonhomme[0]][bonhomme[1]] = "s";
+            bonhomme = [bonhomme[0]][bonhomme[1]-1];
+            updateTable(jsGrille);
+        }
+        else if(jsGrille[bonhomme[0]][bonhomme[1]-1] == "ms"){
+            gameOver();
+        }
+    }
 
-    */
+    if(direction == "droit"){
+        if(jsGrille[bonhomme[0]][bonhomme[1]+1] != "m" && jsGrille[bonhomme[0]][bonhomme[1]+1] != "ms"){
+            console.log("droit");
+            jsGrille[bonhomme[0]][bonhomme[1]+1] = "b";
+            jsGrille[bonhomme[0]][bonhomme[1]] = "s";
+            bonhomme = [bonhomme[0]][bonhomme[1]+1];
+            updateTable(jsGrille);
+        }
+        else if(jsGrille[bonhomme[0]][bonhomme[1]+1] == "ms"){
+            gameOver();
+        }
+    }
+}
+
+function gameOver(){
+    console.log("Le jeu est terminer");
+    bouton_droit.removeEventListener("click",bougerBonhomme("droit"));
+    //bouton_droit.addEventListener("click", gameOver)
+    //bouton_gauche.removeEventListener("click",gameOver);
+    //bouton_haut.removeEventListener("click",gameOver);
+    //bouton_bas.removeEventListener("click",gameOver);
+}

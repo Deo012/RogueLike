@@ -6,12 +6,15 @@
     right: auto;
 }
 #grillejeux td{
-    height: 40px;
-    width: 40px;
+    height: 20px;
+    width: 20px;
     text-align: center;
 }
 #bonhomme{
     background-color: brown;
+}
+.sol{
+    background-color: green;
 }
 p{
     text-align: center;

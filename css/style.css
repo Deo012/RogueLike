@@ -10,21 +10,25 @@
     width: 20px;
     text-align: center;
 }
-#bonhomme{
-    background-color: brown;
+.bonhomme{
+    background-color: blue;
 }
 .sol{
-    background-color: green;
+    background-color: palegoldenrod;
 }
 p{
     text-align: center;
 }
 .monstre{
-    background-color: blueviolet;
+    background-color: red;
 }
 .tresor{
     background-color: goldenrod;
 }
+.mur{
+    background-color: black;
+}
 #afficheur_de_score{
-    font-size: 2em;
+    font-size: 1em;
+    text-align: center;
 }

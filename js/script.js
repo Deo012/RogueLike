@@ -4,32 +4,31 @@ const JOUEUR = "b";
 const MONSTRE = "ms";
 const TRESOR = "t";
 
-document.addEventListener("DOMContentLoaded", () => {
-let jsGrille = [
-    ["m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m"],
-    ["m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m"],
-    ["m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m"],
-    ["m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m"],
-    ["m","m","m","m","m","m","m","m","m","m","s","s","s","s","s","b","m","m","m","m","m","m","m","m","m"],
-    ["m","m","m","m","m","m","m","m","m","t","t","s","s","s","s","s","m","m","m","m","m","m","m","m","m"],
-    ["m","m","m","m","m","m","m","m","m","s","s","t","s","s","s","s","m","m","m","m","m","m","m","m","m"],
-    ["m","m","m","m","m","m","m","m","m","s","ms","t","s","s","s","s","m","m","m","m","m","m","m","m","m"],
-    ["m","m","m","m","m","m","m","m","m","s","s","s","s","s","t","s","m","m","m","m","m","m","m","m","m"],
-    ["m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m"],
-    ["m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m"],
-    ["m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m"],
-    ["m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m"],
-    ["m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m"],
-    ["m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m"]
 
-];
+  let jsGrille = [
+    ["m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m"],
+    ["m","s","s","s","s","s","s","s","s","s","s","s","s","s","s","s","s","s","m","m","m","s","s","t","m"],
+    ["m","s","s","m","s","s","s","s","s","s","s","s","s","s","s","s","s","s","s","s","s","s","s","s","m"],
+    ["m","s","s","s","s","s","s","s","s","s","s","m","m","m","s","s","m","m","m","m","m","m","s","s","m"],
+    ["m","s","s","s","s","s","m","m","s","s","s","s","s","s","s","b","s","s","s","s","s","s","s","s","m"],
+    ["m","s","s","m","m","m","m","m","s","s","t","s","s","m","m","m","s","s","m","m","m","m","s","s","m"],
+    ["t","s","m","m","m","m","m","m","s","s","s","m","s","m","m","m","s","s","m","m","m","m","s","s","m"],
+    ["m","s","m","m","m","m","m","m","s","s","ms","t","s","s","s","s","s","s","m","m","m","m","s","s","m"],
+    ["m","s","s","s","s","s","s","s","s","s","s","s","m","m","m","s","s","s","s","s","s","s","s","s","m"],
+    ["m","s","s","s","s","s","s","s","s","s","s","s","ms","s","s","s","s","m","m","m","m","m","s","s","m"],
+    ["m","s","m","m","m","m","m","m","s","m","s","m","s","m","t","s","s","s","s","s","s","m","s","s","m"],
+    ["m","s","s","s","s","s","s","s","s","m","s","m","s","m","m","s","s","m","m","m","m","m","s","s","m"],
+    ["m","s","s","s","s","s","s","s","s","s","s","m","s","m","m","s","s","m","m","m","m","m","s","s","m"],
+    ["m","s","m","m","m","m","m","m","m","m","t","s","s","s","s","ms","t","s","s","s","s","s","s","s","m"],
+    ["m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m","m"]
+  ];
 
 
 let htmlGrille = document.getElementById("grillejeux");
+let bonhommeX;
+let bonhommeY;
 let afficheurScore = document.getElementById("afficheur_de_score");
 let score = 0;
-let bonhomme; // [x, y]
-let positionMonstre; // [x, y]
 let partieTerminee = false; // Variable pour indiquer si la partie est terminée
 
 updateTable(jsGrille);
@@ -44,27 +43,27 @@ bouton_bas.addEventListener("click", () => { bougerBonhomme("bas") });
 bouton_haut.addEventListener("click", () => { bougerBonhomme("haut") });
 bouton_gauche.addEventListener("click", () => { bougerBonhomme("gauche") });
 bouton_droit.addEventListener("click", () => { bougerBonhomme("droit") });
-
+boutonReset.addEventListener("click",()=>{ reset("btn_reset")});
 function updateTable(table) {
   console.log("Update:");
   htmlGrille.innerHTML = null;
+  
   for (let i = 0; i < table.length; i++) {
     let tableRow = document.createElement("tr");
 
     for (let j = 0; j < table[i].length; j++) {
       let tableData = document.createElement("td");
-      tableData.innerHTML = table[i][j];
       tableRow.appendChild(tableData);
 
       switch (table[i][j]) {
         case JOUEUR:
-          bonhomme = [i, j];
-          tableData.setAttribute("id", "bonhomme");
-          console.log("Le bonhomme est a: " + bonhomme); //debug
+          bonhommeY = i;
+          bonhommeX = j;
+          tableData.classList.add("bonhomme");
+
+          console.log("Le bonhomme est a: " + bonhommeX + ", " + bonhommeY); //debug
           break;
         case MONSTRE:
-          positionMonstre = [i, j];
-          console.log("Le monstre est a: " + positionMonstre);
           tableData.setAttribute("class", "monstre");
           break;
         case TRESOR:
@@ -89,67 +88,67 @@ function bougerBonhomme(direction) {
       }
   // Bouger le bonhomme selon direction
   if (direction === "bas") {
-    if (jsGrille[bonhomme[0] + 1][bonhomme[1]] !== MUR && jsGrille[bonhomme[0] + 1][bonhomme[1]] !== MONSTRE) {
-      if (jsGrille[bonhomme[0] + 1][bonhomme[1]] === TRESOR) {
+    if (jsGrille[bonhommeY + 1][bonhommeX] !== MUR && jsGrille[bonhommeY + 1][bonhommeX] !== MONSTRE) {
+      if (jsGrille[bonhommeY + 1][bonhommeX] === TRESOR) {
         score += 1;
         console.log("Score: "+ score);
         afficheurScore.innerHTML = "Score: " + score;
       }
-      jsGrille[bonhomme[0] + 1][bonhomme[1]] = JOUEUR;
-      jsGrille[bonhomme[0]][bonhomme[1]] = SOL;
-      bonhomme[0]++;
-      bougerMonstre(jsGrille,randomNumber(),randomNumber());
+      jsGrille[bonhommeY + 1][bonhommeX] = JOUEUR;
+      jsGrille[bonhommeY][bonhommeX] = SOL;
+      bonhommeY++;
       updateTable(jsGrille);
-    } else if (jsGrille[bonhomme[0] + 1][bonhomme[1]] === MONSTRE) {
-      gameOver();
+      detecterMonstre(jsGrille);
+    } else if (jsGrille[bonhommeY + 1][bonhommeX] === MONSTRE) {
+      gameOver(bonhommeY + 1,bonhommeX);
     }
   } else if (direction === "haut") {
-    if (jsGrille[bonhomme[0] - 1][bonhomme[1]] !== MUR && jsGrille[bonhomme[0] - 1][bonhomme[1]] !== MONSTRE) {
-      if (jsGrille[bonhomme[0] - 1][bonhomme[1]] === TRESOR) {
+    if (jsGrille[bonhommeY - 1][bonhommeX] !== MUR && jsGrille[bonhommeY - 1][bonhommeX] !== MONSTRE) {
+      if (jsGrille[bonhommeY - 1][bonhommeX] === TRESOR) {
         score += 1;
         console.log("Score: "+ score);
         afficheurScore.innerHTML = "Score: " + score;
       }
-      jsGrille[bonhomme[0] - 1][bonhomme[1]] = JOUEUR;
-      jsGrille[bonhomme[0]][bonhomme[1]] = SOL;
-      bonhomme[0]--;
-      bougerMonstre(jsGrille,randomNumber(),randomNumber());
+      jsGrille[bonhommeY - 1][bonhommeX] = JOUEUR;
+      jsGrille[bonhommeY][bonhommeX] = SOL;
+      bonhommeY--;
       updateTable(jsGrille);
-    } else if (jsGrille[bonhomme[0] - 1][bonhomme[1]] === MONSTRE) {
-      gameOver();
+      detecterMonstre(jsGrille);
+    } else if (jsGrille[bonhommeY - 1][bonhommeX] === MONSTRE) {
+      gameOver(bonhommeY - 1,bonhommeX);
     }
   } else if (direction === "gauche") {
-    if (jsGrille[bonhomme[0]][bonhomme[1] - 1] !== MUR && jsGrille[bonhomme[0]][bonhomme[1] - 1] !== MONSTRE) {
-      if (jsGrille[bonhomme[0]][bonhomme[1] - 1] === TRESOR) {
+    if (jsGrille[bonhommeY][bonhommeX - 1] !== MUR && jsGrille[bonhommeY][bonhommeX - 1] !== MONSTRE) {
+      if (jsGrille[bonhommeY][bonhommeX - 1] === TRESOR) {
         score += 1;
         console.log("Score: "+ score);
         afficheurScore.innerHTML = "Score: " + score;
       }
-      jsGrille[bonhomme[0]][bonhomme[1] - 1] = JOUEUR;
-      jsGrille[bonhomme[0]][bonhomme[1]] = SOL;
-      bonhomme[1]--;
-      bougerMonstre(jsGrille,randomNumber(),randomNumber());
+      jsGrille[bonhommeY][bonhommeX - 1] = JOUEUR;
+      jsGrille[bonhommeY][bonhommeX] = SOL;
+      bonhommeX--;
       updateTable(jsGrille);
-    } else if (jsGrille[bonhomme[0]][bonhomme[1] - 1] === MONSTRE) {
-      gameOver();
+      detecterMonstre(jsGrille);
+    } else if (jsGrille[bonhommeY][bonhommeX - 1] === MONSTRE) {
+      gameOver(bonhommeY,bonhommeX - 1);
     }
   } else if (direction === "droit") {
-    if (jsGrille[bonhomme[0]][bonhomme[1] + 1] !== MUR && jsGrille[bonhomme[0]][bonhomme[1] + 1] !== MONSTRE) {
-      if (jsGrille[bonhomme[0]][bonhomme[1] + 1] === TRESOR) {
+    if (jsGrille[bonhommeY][bonhommeX + 1] !== MUR && jsGrille[bonhommeY][bonhommeX + 1] !== MONSTRE) {
+      if (jsGrille[bonhommeY][bonhommeX + 1] === TRESOR) {
         score += 1;
         console.log("Score: "+ score);
         afficheurScore.innerHTML = "Score: " + score;
       }
-      jsGrille[bonhomme[0]][bonhomme[1] + 1] = JOUEUR;
-      jsGrille[bonhomme[0]][bonhomme[1]] = SOL;
-      bonhomme[1]++;
-      bougerMonstre(jsGrille,randomNumber(),randomNumber());
+      jsGrille[bonhommeY][bonhommeX + 1] = JOUEUR;
+      jsGrille[bonhommeY][bonhommeX] = SOL;
+      bonhommeX++;
       updateTable(jsGrille);
-    } else if (jsGrille[bonhomme[0]][bonhomme[1] + 1] === MONSTRE) {
-      gameOver();
+      detecterMonstre(jsGrille);
+    } else if (jsGrille[bonhommeY][bonhommeX + 1] === MONSTRE) {
+      gameOver(bonhommeY,bonhommeX + 1);
     }
   }
-  if (jsGrille[bonhomme[0]][bonhomme[1]].includes(MONSTRE)) {
+  if (jsGrille[bonhommeY][bonhommeX].includes(MONSTRE)) {
     gameOver();
     return; // Arrêter la fonction ici pour éviter tout déplacement supplémentaire
   }
@@ -157,76 +156,116 @@ function bougerBonhomme(direction) {
 
 
 
-function gameOver() {
-    partieTerminee = true; // La partie est terminée, désactiver les mouvements du joueur
-
-    // Trouver la position du monstre
-
-
-  for (let i = 0; i < jsGrille.length; i++) {
-
-    for (let j = 0; j < jsGrille[i].length; j++) {
-
-      if (jsGrille[i][j].includes(MONSTRE)) {
-
-        positionMonstre = [i, j];
-
-        break;
-
-      }
-    }
-  }
+function gameOver(y,x) {
+   
+  partieTerminee = true; // La partie est terminée, désactiver les mouvements du joueur
 
   // Mettre à jour la position du joueur avec la position du monstre
-
-  jsGrille[bonhomme[0]][bonhomme[1]] = SOL;
-
-  jsGrille[positionMonstre[0]][positionMonstre[1]] = JOUEUR;
-
-  bonhomme = positionMonstre;
+  jsGrille[bonhommeY][bonhommeX] = SOL;
+  jsGrille[y][x] = JOUEUR;
+  bonhommeX = x;
+  bonhommeY = y;
 
   // Mettre à jour l'affichage de la grille
-
-    updateTable(jsGrille);
-
-    setTimeout(() => {
-
-      alert("Le jeu est terminé. Vous avez été capturé par un monstre !");
-
-    }, 0);
-
-  }
+  updateTable(jsGrille);
+  setTimeout(() => {
+    alert("Le jeu est terminé. Vous avez été capturé par un monstre !");
+  }, 0);
+}
+document.addEventListener("keydown", function (event) {
+    if (!partieTerminee) {
+      if (event.key === "ArrowUp" || event.key === "Up") {
+        bougerBonhomme("haut");
+      } else if (event.key === "ArrowDown" || event.key === "Down") {
+        bougerBonhomme("bas");
+      } else if (event.key === "ArrowLeft" || event.key === "Left") {
+        bougerBonhomme("gauche");
+      } else if (event.key === "ArrowRight" || event.key === "Right") {
+        bougerBonhomme("droit");
+      }
+    }
 });
-function bougerMonstre(jsGrille,directionVertical, directionHorizontal){
-
-  //trouver le montre dans la grille
-  for(i = 0; i < 15; i++){
-    for(j = 0; j < 25; j++){
-      if(jsGrille[i][j].includes(MONSTRE)){
-        positionMonstre = [i,j];
-        break;
+  
+function reset() {
+    window.location.reload(true)
+}
+  
+function detecterMonstre(table){
+  console.log("Detecting monsters..."); //track le mouvement
+  let YRandom;
+  let XRandom;
+  let countPourConsole = 0; //track le mouvement
+  for(let i = 0; i < table.length; i++){
+    YRandom = randomNumber();
+    XRandom = randomNumber();
+    for(let j = 0; j < table[i].length; j++){
+      if(table[i][j] == MONSTRE){
+        countPourConsole++;//track le mouvement
+        console.log("Monstre " + countPourConsole + " vas bouger:");//track le mouvement
+        bougerMontre(i,j,YRandom,XRandom);
+        console.log("Monstre " + countPourConsole + " a fini son mouvement!!!");//track le mouvement
       }
     }
   }
-
-  if(directionHorizontal !== 0 || directionVertical !== 0){
-    //le faire bouger de maniere aleatoire seulement si une des direction n'est pas null
-    if (jsGrille[positionMonstre[0] + directionHorizontal][positionMonstre[1] + directionVertical] !== MUR && jsGrille[positionMonstre[0] + directionHorizontal][positionMonstre[1] + directionVertical] !== TRESOR) {
-      jsGrille[positionMonstre[0] + directionHorizontal][positionMonstre[1] + directionVertical] = MONSTRE;
-      jsGrille[positionMonstre[0]][positionMonstre[1]] = SOL;
-      positionMonstre = [positionMonstre[0] + directionHorizontal, positionMonstre[1] + directionVertical]
-    }
-    else{ //vas dans la direction opposé si devant toi il y a un murs
-      jsGrille[positionMonstre[0] + directionHorizontal*-1][positionMonstre[1] + directionVertical*-1] = MONSTRE;
-      jsGrille[positionMonstre[0]][positionMonstre[1]] = SOL;
-      positionMonstre = [positionMonstre[0] + directionHorizontal*-1, positionMonstre[1] + directionVertical*-1]
-    }
-  }
-
 }
 function randomNumber(){
-  //Formule our code qui genere un nombre aleatoire dans une intervale : Math.random() * ((max - min) + min)
-  let random = Math.floor(Math.random() * (1 - (-1)) + (-1)); //donne un nombre entre -1 et 1
-  console.log("random: " + random);
+  let random;
+
+  do{
+    //Formule our code qui genere un nombre aleatoire dans une intervale : Math.random() * ((max - min) + min)
+    random = Math.floor(Math.random() * (2 - (-1)) + (-1)); //donne un nombre entre -1 et 1
+  }while(random === 0)
+
+  //console.log("random: " + random);
   return random;
+}
+function bougerMontre(y,x, yDirection, xDirection){ //x,y sont les positions du monstre
+
+  if(yDirection !== 0 || xDirection !== 0){ //empecher de faire du surplace
+
+    if(jsGrille[y + yDirection][x + xDirection] === SOL){ //il peut avancer si devant lui ces le sol...
+      jsGrille[y + yDirection][x + xDirection] = MONSTRE;
+      jsGrille[y][x] = SOL;
+      console.log("Monstre bougé");
+    }
+    else{
+      switch(chercheCoteLibre(y,x)){
+        case "BAS_LIBRE":
+          console.log("Forcer a avancer en bas")
+          bougerMontre(y,x,1,0);
+          break;
+        case "HAUT_LIBRE":
+          console.log("Forcer a avancer en haut")
+          bougerMontre(y,x,-1,0);
+          break;
+        case "DROITE_LIBRE":
+          console.log("Forcer a avancer a droite")
+          bougerMontre(y,x,0,1);
+          break;
+        case "GAUCHE_LIBRE":
+          console.log("Forcer a avancer a gauche")
+          bougerMontre(y,x,0,-1);
+          break;
+        default:
+          console.log("Rien ne le fait bouger");
+          break;
+      }
+    }
+
+  }
+}
+function chercheCoteLibre(y,x){
+  if(jsGrille[y + 1][x ] === SOL){
+    return "BAS_LIBRE";
+  }
+  else if(jsGrille[y - 1][x ] === SOL){
+    return "HAUT_LIBRE";
+  }
+  else if(jsGrille[y][x + 1] === SOL){
+    return "DROITE_LIBRE";
+  }
+  else if(jsGrille[y][x - 1] === SOL){
+    return "GAUCHE_LIBRE";
+  }
+  else return "NULL"
 }

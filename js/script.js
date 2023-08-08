@@ -206,13 +206,14 @@ function detecterMonstre(table){
         console.log("Monstre " + countPourConsole + " a fini son mouvement!!!");//track le mouvement
       }
     }
+    
   }
 }
 function randomNumber(){
   let random;
 
   do{
-    //Formule our code qui genere un nombre aleatoire dans une intervale : Math.random() * ((max - min) + min)
+    //Formule ou code qui genere un nombre aleatoire dans une intervale : Math.random() * ((max - min) + min)
     random = Math.floor(Math.random() * (2 - (-1)) + (-1)); //donne un nombre entre -1 et 1
   }while(random === 0)
 

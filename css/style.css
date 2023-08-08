@@ -1,6 +1,4 @@
 #grillejeux{
-    border-collapse: separate;
-    border-spacing: 10px 5px;
     margin: 0 auto;
     bottom: auto;
     right: auto;
@@ -11,24 +9,32 @@
     text-align: center;
 }
 .bonhomme{
-    background-color: blue;
+    background-image: url('../img/joueur-19342-1426198436.png'), url('../img/glazed\ terracotta.png');
+    background-size: cover;
 }
 .sol{
-    background-color: palegoldenrod;
+    background-image: url('../img/glazed\ terracotta.png');
+    background-size: cover;
 }
 p{
     text-align: center;
 }
 .monstre{
-    background-color: red;
+    background-image: url('../img/monstre_93.gif'), url('../img/glazed\ terracotta.png');
+    background-size: cover;
 }
 .tresor{
-    background-color: goldenrod;
+    background-image: url('../img/ruby.png'), url('../img/glazed\ terracotta.png');;
+    background-size: cover;
 }
 .mur{
-    background-color: black;
+    background-image: url('../img/stonewall001.png');
+    background-size: cover;
 }
 #afficheur_de_score{
     font-size: 1em;
     text-align: center;
+}
+body{
+    background-image: url('../img/brickplaster_albedo.png');
 }

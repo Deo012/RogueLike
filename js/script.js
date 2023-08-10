@@ -155,7 +155,7 @@ function bougerBonhomme(direction) {
     }
   }
 
-   // Vérifier si le joueur a recupéré tous les trésors
+   // Vérifier si le joueur a recupéré tous les trésors.
    let nbTresorsRestants = 0;
    for (let i = 0; i < jsGrille.length; i++) {
      for (let j = 0; j < jsGrille[i].length; j++) {

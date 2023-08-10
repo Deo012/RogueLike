@@ -252,42 +252,5 @@ function bougerMontre(y,x, yDirection, xDirection){ //x,y sont les positions du 
     jsGrille[y][x] = SOL;
     console.log("Monstre bougé");
   }
-  else{
-    switch(chercheCoteLibre(y,x)){
-      case "BAS_LIBRE":
-        console.log("Forcer a avancer en bas")
-        bougerMontre(y,x,1,0);
-        break;
-      case "HAUT_LIBRE":
-        console.log("Forcer a avancer en haut")
-        bougerMontre(y,x,-1,0);
-        break;
-      case "DROITE_LIBRE":
-        console.log("Forcer a avancer a droite")
-        bougerMontre(y,x,0,1);
-        break;
-      case "GAUCHE_LIBRE":
-        console.log("Forcer a avancer a gauche")
-        bougerMontre(y,x,0,-1);
-        break;
-      default:
-        console.log("Rien ne le fait bouger");
-        break;
-    }
-  }
-}
-function chercheCoteLibre(y,x){
-  if(jsGrille[y + 1][x ] === SOL){
-    return "BAS_LIBRE";
-  }
-  else if(jsGrille[y - 1][x ] === SOL){
-    return "HAUT_LIBRE";
-  }
-  else if(jsGrille[y][x + 1] === SOL){
-    return "DROITE_LIBRE";
-  }
-  else if(jsGrille[y][x - 1] === SOL){
-    return "GAUCHE_LIBRE";
-  }
-  else return "NULL"
+
 }

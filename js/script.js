@@ -27,11 +27,13 @@ const TRESOR = "t";
 let htmlGrille = document.getElementById("grillejeux");
 let bonhommeX;
 let bonhommeY;
+let listMonstrePosition = [];
 let afficheurScore = document.getElementById("afficheur_de_score");
 let score = 0;
 let partieTerminee = false; // Variable pour indiquer si la partie est terminée
 
 updateTable(jsGrille);
+
 
 let bouton_haut = document.getElementById("btn_haut");
 let bouton_bas = document.getElementById("btn_bas");
@@ -83,9 +85,9 @@ function updateTable(table) {
 }
 
 function bougerBonhomme(direction) {
-    if (partieTerminee) {
-        return; // Si la partie est terminée, ne pas permettre de mouvement supplémentaire
-      }
+  if (partieTerminee) {
+      return; // Si la partie est terminée, ne pas permettre de mouvement supplémentaire
+  }
   // Bouger le bonhomme selon direction
   if (direction === "bas") {
     if (jsGrille[bonhommeY + 1][bonhommeX] !== MUR && jsGrille[bonhommeY + 1][bonhommeX] !== MONSTRE) {
@@ -97,8 +99,9 @@ function bougerBonhomme(direction) {
       jsGrille[bonhommeY + 1][bonhommeX] = JOUEUR;
       jsGrille[bonhommeY][bonhommeX] = SOL;
       bonhommeY++;
-      updateTable(jsGrille);
       detecterMonstre(jsGrille);
+      bougerTousMonstres();
+      updateTable(jsGrille);
     } else if (jsGrille[bonhommeY + 1][bonhommeX] === MONSTRE) {
       gameOver(bonhommeY + 1,bonhommeX);
     }
@@ -112,8 +115,9 @@ function bougerBonhomme(direction) {
       jsGrille[bonhommeY - 1][bonhommeX] = JOUEUR;
       jsGrille[bonhommeY][bonhommeX] = SOL;
       bonhommeY--;
-      updateTable(jsGrille);
       detecterMonstre(jsGrille);
+      bougerTousMonstres();
+      updateTable(jsGrille);
     } else if (jsGrille[bonhommeY - 1][bonhommeX] === MONSTRE) {
       gameOver(bonhommeY - 1,bonhommeX);
     }
@@ -127,8 +131,9 @@ function bougerBonhomme(direction) {
       jsGrille[bonhommeY][bonhommeX - 1] = JOUEUR;
       jsGrille[bonhommeY][bonhommeX] = SOL;
       bonhommeX--;
-      updateTable(jsGrille);
       detecterMonstre(jsGrille);
+      bougerTousMonstres();
+      updateTable(jsGrille);
     } else if (jsGrille[bonhommeY][bonhommeX - 1] === MONSTRE) {
       gameOver(bonhommeY,bonhommeX - 1);
     }
@@ -142,8 +147,9 @@ function bougerBonhomme(direction) {
       jsGrille[bonhommeY][bonhommeX + 1] = JOUEUR;
       jsGrille[bonhommeY][bonhommeX] = SOL;
       bonhommeX++;
-      updateTable(jsGrille);
       detecterMonstre(jsGrille);
+      bougerTousMonstres();
+      updateTable(jsGrille);
     } else if (jsGrille[bonhommeY][bonhommeX + 1] === MONSTRE) {
       gameOver(bonhommeY,bonhommeX + 1);
     }
@@ -173,17 +179,17 @@ function gameOver(y,x) {
   }, 0);
 }
 document.addEventListener("keydown", function (event) {
-    if (!partieTerminee) {
-      if (event.key === "ArrowUp" || event.key === "Up") {
-        bougerBonhomme("haut");
-      } else if (event.key === "ArrowDown" || event.key === "Down") {
-        bougerBonhomme("bas");
-      } else if (event.key === "ArrowLeft" || event.key === "Left") {
-        bougerBonhomme("gauche");
-      } else if (event.key === "ArrowRight" || event.key === "Right") {
-        bougerBonhomme("droit");
-      }
+  if (!partieTerminee) {
+    if (event.key === "ArrowUp" || event.key === "Up") {
+      bougerBonhomme("haut");
+    } else if (event.key === "ArrowDown" || event.key === "Down") {
+      bougerBonhomme("bas");
+    } else if (event.key === "ArrowLeft" || event.key === "Left") {
+      bougerBonhomme("gauche");
+    } else if (event.key === "ArrowRight" || event.key === "Right") {
+      bougerBonhomme("droit");
     }
+  }
 });
   
 function reset() {
@@ -191,22 +197,14 @@ function reset() {
 }
   
 function detecterMonstre(table){
+  listMonstrePosition.length = 0;
   console.log("Detecting monsters..."); //track le mouvement
-  let YRandom;
-  let XRandom;
-  let countPourConsole = 0; //track le mouvement
   for(let i = 0; i < table.length; i++){
-    YRandom = randomNumber();
-    XRandom = randomNumber();
     for(let j = 0; j < table[i].length; j++){
       if(table[i][j] == MONSTRE){
-        countPourConsole++;//track le mouvement
-        console.log("Monstre " + countPourConsole + " vas bouger:");//track le mouvement
-        bougerMontre(i,j,YRandom,XRandom);
-        console.log("Monstre " + countPourConsole + " a fini son mouvement!!!");//track le mouvement
+        listMonstrePosition.push([i,j])
       }
     }
-    
   }
 }
 function randomNumber(){
@@ -220,39 +218,45 @@ function randomNumber(){
   //console.log("random: " + random);
   return random;
 }
+function bougerTousMonstres(){
+  let xRandom;
+  let yRandom;
+  listMonstrePosition.forEach(element => {
+    xRandom = randomNumber();
+    yRandom = randomNumber();
+  
+    bougerMontre(element[0],element[1], yRandom, xRandom);
+  });
+}
 function bougerMontre(y,x, yDirection, xDirection){ //x,y sont les positions du monstre
 
-  if(yDirection !== 0 || xDirection !== 0){ //empecher de faire du surplace
-
-    if(jsGrille[y + yDirection][x + xDirection] === SOL){ //il peut avancer si devant lui ces le sol...
-      jsGrille[y + yDirection][x + xDirection] = MONSTRE;
-      jsGrille[y][x] = SOL;
-      console.log("Monstre bougé");
+  if(jsGrille[y + yDirection][x + xDirection] === SOL ){ //il peut avancer si devant lui ces le sol...
+    jsGrille[y + yDirection][x + xDirection] = MONSTRE;
+    jsGrille[y][x] = SOL;
+    console.log("Monstre bougé");
+  }
+  else{
+    switch(chercheCoteLibre(y,x)){
+      case "BAS_LIBRE":
+        console.log("Forcer a avancer en bas")
+        bougerMontre(y,x,1,0);
+        break;
+      case "HAUT_LIBRE":
+        console.log("Forcer a avancer en haut")
+        bougerMontre(y,x,-1,0);
+        break;
+      case "DROITE_LIBRE":
+        console.log("Forcer a avancer a droite")
+        bougerMontre(y,x,0,1);
+        break;
+      case "GAUCHE_LIBRE":
+        console.log("Forcer a avancer a gauche")
+        bougerMontre(y,x,0,-1);
+        break;
+      default:
+        console.log("Rien ne le fait bouger");
+        break;
     }
-    else{
-      switch(chercheCoteLibre(y,x)){
-        case "BAS_LIBRE":
-          console.log("Forcer a avancer en bas")
-          bougerMontre(y,x,1,0);
-          break;
-        case "HAUT_LIBRE":
-          console.log("Forcer a avancer en haut")
-          bougerMontre(y,x,-1,0);
-          break;
-        case "DROITE_LIBRE":
-          console.log("Forcer a avancer a droite")
-          bougerMontre(y,x,0,1);
-          break;
-        case "GAUCHE_LIBRE":
-          console.log("Forcer a avancer a gauche")
-          bougerMontre(y,x,0,-1);
-          break;
-        default:
-          console.log("Rien ne le fait bouger");
-          break;
-      }
-    }
-
   }
 }
 function chercheCoteLibre(y,x){

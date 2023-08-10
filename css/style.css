@@ -1,3 +1,12 @@
+header{
+    text-align: center;
+}
+#titre{
+    display: inline-block;
+    font-size: xx-large;
+    background-color: rgb(255, 255, 255);
+    margin: 0 auto;
+}
 #grillejeux{
     margin: 0 auto;
     bottom: auto;

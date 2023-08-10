@@ -154,6 +154,23 @@ function bougerBonhomme(direction) {
       gameOver(bonhommeY,bonhommeX + 1);
     }
   }
+
+   // Vérifier si le joueur a recupéré tous les trésors
+   let nbTresorsRestants = 0;
+   for (let i = 0; i < jsGrille.length; i++) {
+     for (let j = 0; j < jsGrille[i].length; j++) {
+       if (jsGrille[i][j] === TRESOR) {
+         nbTresorsRestants++;
+       }
+     }
+   }
+ 
+   if (nbTresorsRestants === 0) {
+     partieTerminee = true;
+     alert("Félicitations ! Vous avez recupéré tous les trésors et gagné la partie !");
+     return;
+   }
+
   if (jsGrille[bonhommeY][bonhommeX].includes(MONSTRE)) {
     gameOver();
     return; // Arrêter la fonction ici pour éviter tout déplacement supplémentaire

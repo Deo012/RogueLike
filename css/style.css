@@ -1,12 +1,3 @@
-header{
-    text-align: center;
-}
-#titre{
-    display: inline-block;
-    font-size: xx-large;
-    background-color: rgb(255, 255, 255);
-    margin: 0 auto;
-}
 #grillejeux{
     margin: 0 auto;
     bottom: auto;
@@ -43,7 +34,15 @@ p{
 #afficheur_de_score{
     font-size: 1em;
     text-align: center;
+    color: bisque;
 }
 body{
-    background-image: url('../img/brickplaster_albedo.png');
+    background-image: url('../img/fond-gris-lisse_53876-108462.avif');
+}
+h1{
+    text-align: center;
+    color: bisque;
+}
+#copyright{
+    color: bisque;
 }
